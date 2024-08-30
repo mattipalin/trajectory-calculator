@@ -622,19 +622,6 @@ def generate_aux_curve(phi_d, theta_d, psi_d, rotation_case, coordinate_system):
 		C21, C22, C23	= math.sin(dpsi)	, math.cos(dpsi),  0.0
 		C31, C32, C33	= 0.0		,           0.0,  1.0
 
-	if rotation_case == "yxz":
-		A11, A12, A13 	= math.cos(dphi),    	 0.0,  math.sin(dphi)
-		A21, A22, A23	= 0.0		 ,       1.0,  	           0.0
-		A31, A32, A33	= -math.sin(dphi),        0.0,  math.cos(dphi)
-
-		B11, B12, B13 	= 1.0, 			0.0,            0.0
-		B21, B22, B23	= 0.0,        math.cos(dtheta), -math.sin(dtheta)
-		B31, B32, B33	= 0.0,        math.sin(dtheta),  math.cos(dtheta)
-
-		C11, C12, C13 	= math.cos(dpsi)	,-math.sin(dpsi),  0.0
-		C21, C22, C23	= math.sin(dpsi)	, math.cos(dpsi),  0.0
-		C31, C32, C33	= 0.0		,           0.0,  	   1.0
-
 	if rotation_case == "xzy":
 		A11, A12, A13 	= 1.0, 			0.0,            0.0
 		A21, A22, A23	= 0.0,        math.cos(dphi), -math.sin(dphi)
@@ -647,6 +634,19 @@ def generate_aux_curve(phi_d, theta_d, psi_d, rotation_case, coordinate_system):
 		C11, C12, C13 	= math.cos(dpsi),    	 0.0,  math.sin(dpsi)
 		C21, C22, C23	= 0.0		 ,       1.0,  	           0.0
 		C31, C32, C33	= -math.sin(dpsi),        0.0,  math.cos(dpsi)
+
+	if rotation_case == "yxz":
+		A11, A12, A13 	= math.cos(dphi),    	 0.0,  math.sin(dphi)
+		A21, A22, A23	= 0.0		 ,       1.0,  	           0.0
+		A31, A32, A33	= -math.sin(dphi),        0.0,  math.cos(dphi)
+
+		B11, B12, B13 	= 1.0, 			0.0,            0.0
+		B21, B22, B23	= 0.0,        math.cos(dtheta), -math.sin(dtheta)
+		B31, B32, B33	= 0.0,        math.sin(dtheta),  math.cos(dtheta)
+
+		C11, C12, C13 	= math.cos(dpsi)	,-math.sin(dpsi),  0.0
+		C21, C22, C23	= math.sin(dpsi)	, math.cos(dpsi),  0.0
+		C31, C32, C33	= 0.0		,           0.0,  	   1.0
 
 	if rotation_case == "yzx":
 		A11, A12, A13 	= math.cos(dphi),    	 0.0,  math.sin(dphi)
