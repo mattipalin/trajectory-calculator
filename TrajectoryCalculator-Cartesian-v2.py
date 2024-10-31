@@ -33,7 +33,7 @@ def g(altitude): 			return 6.674e-11*M_Mars/((R_Mars + altitude)**2)			# Acceler
 def temperature(altitude): 		return 226.0-4.5*math.log(1.0+altitude/1000)**2				# Temperature on Mars
 def viscosity(temperature):		return 1.92e-7*(temperature**(1.8))/(temperature+60)			# Air dynamic viscosity on Mars
 def dynpres(altitude,velocity):		return 0.5*rho(altitude)*velocity**2					# Dynamic pressure
-def speed_of_sound(altitude):		return 236.4*math.exp(-0.00247*altitude/1000)				# Speed of sound on Mars
+def speed_of_sound(altitude):		return 236.4*math.exp(-0.002470*altitude/1000.0)			# Speed of sound on Mars
 def density(altitude): 												# Medium density
 	if altitude<46000:		return math.exp(-4.113-0.095*altitude/1000)
 	else:				return math.exp(-2.320-0.134*altitude/1000)
@@ -72,7 +72,7 @@ def writeline(velocity_vector,gamma,altitude,time,flight_range, x, y):				# Defi
 	velocity=abs(velocity_vector)
 	Ma	= velocity/speed_of_sound(altitude)
 	Re	= density(altitude)*math.sqrt(A*4.0/3.14159)*abs(velocity_vector)/viscosity(temperature(altitude))
-	Kn	= Ma/Re*math.sqrt(1.35*3.14159/2)
+	Kn	= Ma/Re*math.sqrt(1.35*3.141592/2)
 
 	entry00 = time									# Time (seconds)
 	entry01 = velocity								# Velocity (m/s)
@@ -151,8 +151,8 @@ def fly():
 		#print "Uy		=", U[1]
 		#print "dUxdt            =", dUxdt(r[0],r[1],Ux,Uy)
 		#print "dUydt            =", dUydt(r[0],r[1],Ux,Uy)
-		#print "gamma		=", gamma*180.0/3.14159
-		#print "theta		=", theta*180.0/3.14159
+		#print "gamma		=", gamma*180.0/3.141592
+		#print "theta		=", theta*180.0/3.141592
 		#raw_input()
 
 		if altitude > altitude_init: return False
