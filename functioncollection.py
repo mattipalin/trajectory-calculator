@@ -731,3 +731,52 @@ def generate_aux_curve(phi_d, theta_d, psi_d, rotation_case, coordinate_system):
 		psi_d_d = psi_d_d + dpsi
 
 	return aux_x_history, aux_y_history, aux_z_history
+
+
+
+def WindComponent(position, velocity, time):
+    """
+    Calculate wind force component for Mars flight trajectory simulation.
+    
+    Parameters:
+    position (np.array): 3D position vector [x, y, z] in km
+    velocity (np.array): 3D velocity vector [vx, vy, vz] in km/s
+    time (float): Current simulation time in seconds
+    
+    Returns:
+    np.array: 3D wind force vector [Fx, Fy, Fz] in Newtons
+    """
+    # Mars atmospheric density model (simplified)
+    # Exponential decay with altitude
+    altitude = np.linalg.norm(position) - 3389.5  # Mars radius is ~3389.5 km
+    density = 0.020 * np.exp(-altitude / 11.1)  # kg/m^3
+    
+    # Wind speed varies with altitude and time
+    # Adding some random oscillations for variety
+    wind_base = np.array([
+        30 * np.sin(time / 1000 + altitude / 50),  # x-component
+        25 * np.cos(time / 800 + altitude / 40),   # y-component
+        15 * np.sin(time / 1200)                   # z-component
+    ])
+    
+    # Dust storm effect (random occurrence)
+    dust_storm = np.random.random() < 0.01  # 1% chance of dust storm
+    if dust_storm:
+        wind_base *= 3.5
+    
+    # Calculate relative wind velocity
+    relative_wind = wind_base - velocity
+    
+    # Simple drag equation: F = 1/2 * rho * v^2 * Cd * A
+    drag_coefficient = 0.47  # Approximate sphere drag coefficient
+    reference_area = 10.0    # m^2
+    
+    wind_force = (0.5 * density * np.linalg.norm(relative_wind) * 
+                 drag_coefficient * reference_area * 
+                 relative_wind)
+    
+    # Add turbulence
+    turbulence = np.random.normal(0, 0.1, 3) * np.linalg.norm(wind_force)
+    wind_force += turbulence
+    
+    return wind_force
